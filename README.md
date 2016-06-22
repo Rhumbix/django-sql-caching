@@ -27,3 +27,6 @@ If you did run into this rare situation, the workaround is to add the following 
 ## Enjoy!
 
 Email me with any questions: [kenneth.jiang@gmail.com](kenneth.jiang@gmail.com).
+
+#Acknowledgement
+This package is based on [this article](http://chase-seibert.github.io/blog/2013/01/17/caching-selects-per-request-django.html) published by [Chase Seibert](http://chase-seibert.github.io/blog/index.html) 
