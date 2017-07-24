@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='django-sql-caching',
-      version='0.1.0',
+      version='0.1.1',
       description='Cache DB reads on per-request basis.',
       url='https://github.com/Rhumbix/django-sql-caching.git',
       author='Kenneth Jiang',

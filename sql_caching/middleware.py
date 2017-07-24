@@ -8,7 +8,6 @@ meaning anything over 100 records. This is to preserve Django's lazy query set e
 '''
 from threading import local
 import itertools
-from django.db.models.sql.constants import MULTI
 from django.db.models.sql.compiler import SQLCompiler
 from django.db.models.sql.datastructures import EmptyResultSet
 from django.db.models.sql.constants import GET_ITERATOR_CHUNK_SIZE
@@ -23,10 +22,10 @@ def get_sql(compiler):
         return compiler.as_sql()
     except EmptyResultSet:
         pass
-    return ('', [])
+    return '', []
 
 
-def execute_sql_cache(self, result_type=MULTI):
+def execute_sql_cache(self, *args, **kwargs):
 
     if hasattr(_thread_locals, 'query_cache'):
 
@@ -37,7 +36,7 @@ def execute_sql_cache(self, result_type=MULTI):
             if sql in _thread_locals.query_cache:
                 return _thread_locals.query_cache[sql]
 
-            result = self._execute_sql(result_type)
+            result = self._execute_sql(*args, **kwargs)
             if hasattr(result, 'next'):
 
                 # only cache if this is not a full first page of a chunked set
@@ -55,10 +54,10 @@ def execute_sql_cache(self, result_type=MULTI):
             # the database has been updated; throw away the cache
             _thread_locals.query_cache = {}
 
-    return self._execute_sql(result_type)
+    return self._execute_sql(*args, **kwargs)
 
 
-class QueryCacheMiddleware:
+class QueryCacheMiddleware(object):
     def process_request(self, request):
         _thread_locals.query_cache = {}
 
